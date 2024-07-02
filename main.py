@@ -10,14 +10,18 @@ class UniversalTuringMachine:
         print(self.stateTape)
         self.descriptionTape = inputM.actions  # Description of the simulated TM
         print(self.descriptionTape)
-        self.contentTape = inputM.input_string  # Working tape for the simulated TM
+        self.contentTape = " " + inputM.input_string + " "  # Working tape for the simulated TM
         print(self.contentTape)
         self.initialState = inputM.start_state  # Initial state of the UTM
-        # print(self.initialState)
         self.stateHead = self.stateTape.index(self.initialState[0])
-        print(self.initialState[0])
-        self.descriptionHead = 0
         self.contentHead = 0
+        self.set_content_head()
         self.finalState = inputM.final_state  # Final state of the UTM
+
+    def set_content_head(self):
+        for item in self.descriptionTape:
+            if item[0] == self.initialState[0]:
+                self.descriptionHead = self.initialState[0]
+                break
 
 utm = UniversalTuringMachine()
