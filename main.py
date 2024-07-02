@@ -1,6 +1,8 @@
 from InputM import InputM
 
 
+# encode_state = Encode_TuringMachine_And_States.encode_transition()
+
 class UniversalTuringMachine:
     def __init__(self):
         inputM = InputM()
