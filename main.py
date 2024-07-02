@@ -18,4 +18,5 @@ class UniversalTuringMachine:
         self.contentHead = 0
         self.finalState = inputM.final_state  # Final state of the UTM
 
+
 utm = UniversalTuringMachine()
