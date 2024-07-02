@@ -1,6 +1,5 @@
 import re
 
-
 class InputM:
     def __init__(self):
         """
@@ -57,5 +56,14 @@ class InputM:
         for match in matches:
             sub_list = match.split(",")
             result_list.append(sub_list)
-
+            
         return result_list
+
+# Example usage
+# inputM = InputM()
+
+# print(inputM.states)  # Output: ['q1', 'q2', 'q0', 'q4']
+# print(inputM.final_state)  # Output: ['q4']
+# print(inputM.actions)
+# print(inputM.actions[0])  # Output: ['q0', '1', 'x', 'R', 'q0']
+# print(inputM.actions[0][0])  # Output: q0
