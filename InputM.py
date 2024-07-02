@@ -75,6 +75,3 @@ print(inputM.final_state)  # Output: ['q4']
 print(inputM.actions[0])  # Output: ['q0', '1', 'x', 'R', 'q0']
 print(inputM.actions[0][0])  # Output: q0
 
-print("mamammammamamammmamama")
-
-print("mamammammamamammmamama")
