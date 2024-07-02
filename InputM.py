@@ -21,20 +21,16 @@ class InputM:
     """
         with open("input/inputMachine.txt", "r") as f:
             for line in f:
-                key, value = line.strip().split(":", 1)
-                # print("key : ", key)
+                key, value = line.replace(" ", "").strip().split(":", 1)
                 value = value.strip()[1:-1].split(",")  # Remove curly braces and split by comma
-                # print("value : ", value)
                 if key == "States":
                     self.states = value
-                elif key == "Start State":
+                elif key == "StartState":
                     self.start_state = value
-                elif key == "Final States":
+                elif key == "FinalStates":
                     self.final_state = value
                 elif key == "Actions":
-                    print(line)
-                    transitions = line.strip().split(":")[1].strip()[1:-1]
-                    print(line.strip().split(":")[1].strip()[1:-1])
+                    transitions = line.replace(" ", "").strip().split(":")[1].strip()[1:-1]
                     self.actions = self._parse_actions(transitions)
 
     def _read_input_string(self):
@@ -64,14 +60,3 @@ class InputM:
 
         return result_list
         # print("result_list : " , result_list[0][0])
-
-
-# Example usage
-inputM = InputM()
-
-print(inputM.states)  # Output: ['q1', 'q2', 'q0', 'q4']
-print(inputM.final_state)  # Output: ['q4']
-
-print(inputM.actions[0])  # Output: ['q0', '1', 'x', 'R', 'q0']
-print(inputM.actions[0][0])  # Output: q0
-
