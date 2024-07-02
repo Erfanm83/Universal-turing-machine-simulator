@@ -59,4 +59,3 @@ class InputM:
             result_list.append(sub_list)
 
         return result_list
-        # print("result_list : " , result_list[0][0])
