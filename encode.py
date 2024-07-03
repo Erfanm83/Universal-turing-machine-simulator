@@ -135,7 +135,6 @@ class Encode:
 
         return 0
 
-
 # # Example
 # encode = Encode()
 # action = encode.array_action
