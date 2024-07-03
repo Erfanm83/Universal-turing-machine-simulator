@@ -43,16 +43,39 @@ class UniversalTuringMachine:
     def is_threshold(self):
         return self.contentTape[self.contentHead] == '@'
 
+    # def show_head(self, head, tape):
+    #     clear()
+    #     tape_str = ''.join(tape)
+    #     print("tape_str : ", tape_str)
+    #     tape_display = "╔" + "═══╗" * len(tape_str) + "\n"
+    #     tape_display += "║ " + " ║ ".join(tape_str) + " ║\n"
+    #     tape_display += "╚" + "═══╝" * len(tape_str) + "\n"
+    #     head_display = " " + "    " * head + " ↑\n"
+    #     print(tape_display + head_display)
+    #     # print(f'Head at position {self.contentHead} reading {self.contentTape[self.contentHead]}')
+    #     # print(f'Current state: {self.stateTape[self.stateHead]}')
+
     def show_head(self):
         clear()
+        print("Content Tape : ")
         tape_str = ''.join(self.contentTape)
         tape_display = "╔" + "═══╗" * len(tape_str) + "\n"
         tape_display += "║ " + " ║ ".join(tape_str) + " ║\n"
         tape_display += "╚" + "═══╝" * len(tape_str) + "\n"
         head_display = " " + "    " * self.contentHead + " ↑\n"
         print(tape_display + head_display)
-        # print(f'Head at position {self.contentHead} reading {self.contentTape[self.contentHead]}')
-        # print(f'Current state: {self.stateTape[self.stateHead]}')
+
+        self.show_state_head()
+
+    def show_state_head(self):
+        print("State Tape : ")
+        tapelength = len(self.stateTape[0])
+        tape_str = ''.join(self.stateTape)
+        tape_display = "╔" + ("═" * tapelength + "══╗") * len(self.stateTape) + "\n"
+        tape_display += "║ " + " ║ ".join(self.stateTape[i] for i in range(0, len(self.stateTape))) + " ║\n"
+        tape_display += "╚" + ("═" * tapelength + "══╝") * len(self.stateTape) + "\n"
+        head_display = " " + " " * (tapelength + 1) * tapelength * self.stateHead + " ↑\n"
+        print(tape_display + head_display)
 
     def print_message(self, message):
         print("\n")
@@ -78,18 +101,22 @@ class UniversalTuringMachine:
 
         if self.contentHead + 1 == len(self.contentTape):
             self.contentTape.append("@")
+        # elif self.contentHead - 1 < 0:
+        #     contentList = list("@")
+        #     self.contentTape = contentList.append(self.contentTape)
         current_symbol = self.contentTape[self.contentHead]
-        # print("current_symbol : ", current_symbol)
         for action in self.descriptionTape:
-            # print("action : ", action)
-            # print("self.stateTape[self.stateHead] : ", self.stateTape[self.stateHead])
             if action[0] == self.stateTape[self.stateHead] and action[1] == current_symbol:
                 self.contentTape[self.contentHead] = action[2]  # Write new symbol
-                # print("action[2] : ", action[2])
                 self.stateHead = self.stateTape.index(action[4])  # Update state
                 self.contentHead += 1 if action[3] == 'R' else -1  # Move head
                 time.sleep(0.5)  # Delay for 1 second
                 self.show_head()  # Show the tape after the step
+                # print("type(self.descriptionTape) : " , type(self.descriptionTape))
+
+                # flattened_descriptionTape = [item for sublist in self.descriptionTape for item in sublist]
+                # print(flattened_descriptionTape)
+                # self.show_head(self.descriptionHead , flattened_descriptionTape)  # Show the tape after the step
 
                 return True
 
@@ -98,6 +125,9 @@ class UniversalTuringMachine:
 
     def run(self):
         self.show_head()
+
+        # flattened_descriptionTape = [item for sublist in self.descriptionTape for item in sublist]
+        # self.show_head(self.descriptionHead, self.descriptionTape)
         while self.step():
             pass
 
