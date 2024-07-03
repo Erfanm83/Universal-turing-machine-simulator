@@ -1,5 +1,5 @@
-from Encode_TuringMachine_And_States import Decode
 from InputM import InputM
+from encode import Decode
 
 
 # encode_state = Encode_TuringMachine_And_States.encode_transition()
