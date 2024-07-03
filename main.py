@@ -70,6 +70,5 @@ class UniversalTuringMachine:
         while self.step():
             pass
 
-
 utm = UniversalTuringMachine()
 utm.run()
