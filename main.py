@@ -24,5 +24,5 @@ class UniversalTuringMachine:
             if item[0] == self.initialState[0]:
                 self.descriptionHead = self.initialState[0]
                 break
-
+                
 utm = UniversalTuringMachine()

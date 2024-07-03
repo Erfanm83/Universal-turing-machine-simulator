@@ -37,7 +37,7 @@ class InputM:
     Reads the input string from the inputstr.txt file.
     """
         with open("input/inputstr.txt", "r") as f:
-            self.input_string = f.readline().strip()  # Assuming single line input string
+            self.input_string = f.readline().replace(" ", "").strip()  # Assuming single line input string
 
     def _parse_actions(self, str):
 
@@ -63,6 +63,7 @@ class InputM:
 # inputM = InputM()
 
 # print(inputM.states)  # Output: ['q1', 'q2', 'q0', 'q4']
+# print(inputM.start_state)  # Output: ['q0']
 # print(inputM.final_state)  # Output: ['q4']
 # print(inputM.actions)
 # print(inputM.actions[0])  # Output: ['q0', '1', 'x', 'R', 'q0']
