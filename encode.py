@@ -9,7 +9,7 @@ final_state_input = inputM.final_state
 actions_input = inputM.actions
 
 
-class Decode:
+class Encode:
     def __init__(self):
         self.array_states = []
         self.array_action = []
@@ -137,10 +137,10 @@ class Decode:
 
 
 # # Example
-# decode = Decode()
-# action = decode.array_action
-# states = decode.array_states
+# encode = Encode()
+# action = encode.array_action
+# states = encode.array_states
 #
-# number_start_state = decode.decode_state(start_state_input[0])
-# number_final_state = decode.decode_state(final_state_input[0])
-# var = decode.describe
+# number_start_state = encode.decode_state(start_state_input[0])
+# number_final_state = encode.decode_state(final_state_input[0])
+# describe = encode.describe
