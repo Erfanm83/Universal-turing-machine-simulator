@@ -119,7 +119,6 @@ class UniversalTuringMachine:
                 # self.show_head(self.descriptionHead , flattened_descriptionTape)  # Show the tape after the step
 
                 return True
-
         self.print_message("REJECTED")
         return False
 
