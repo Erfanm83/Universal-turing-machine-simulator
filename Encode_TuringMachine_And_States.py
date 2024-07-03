@@ -8,7 +8,6 @@ start_state = inputM.start_state
 final_state = inputM.final_state
 actions = inputM.actions
 
-
 class Decode:
     def __init__(self):
         self.array_states = []
