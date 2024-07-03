@@ -15,6 +15,7 @@ class UniversalTuringMachine:
         self.initialState = inputM.start_state  # Initial state of the UTM
         self.stateHead = self.stateTape.index(self.initialState[0])
         self.contentHead = 0
+
         self.set_content_head()
         self.finalState = inputM.final_state  # Final state of the UTM
 
