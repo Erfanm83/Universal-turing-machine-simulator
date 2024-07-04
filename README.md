@@ -52,3 +52,10 @@ actions = [
 ]
 ```
 on the `utm.py` file you can change the speed of the output on the section named `os.sleep`
+
+### Usage
+write the following code on the Terminal or simply Run `utm.py` in your IDE
+```
+python utm.py
+```
+Our Project has character Tapes instead of 0 and 1 Tapes you can run it access it on the `charTape` Folder
