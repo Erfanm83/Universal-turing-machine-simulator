@@ -1,5 +1,10 @@
 import re
 
+address = "test/one_aa_TM.txt"
+input_address = "test/one_aa_input_reject.txt"
+blank = "#"
+
+
 class InputM:
     def __init__(self):
         """
@@ -18,7 +23,7 @@ class InputM:
         """
         Reads a file and parses the information specific to the inputMachine.txt format.
     """
-        with open("input/inputMachine.txt", "r") as f:
+        with open(address, "r") as f:
             for line in f:
                 key, value = line.replace(" ", "").strip().split(":", 1)
                 value = value.strip()[1:-1].split(",")  # Remove curly braces and split by comma
@@ -36,7 +41,7 @@ class InputM:
         """
     Reads the input string from the inputstr.txt file.
     """
-        with open("input/inputstr.txt", "r") as f:
+        with open(input_address, "r") as f:
             self.input_string = f.readline().replace(" ", "").strip()  # Assuming single line input string
 
     def _parse_actions(self, str):
@@ -54,9 +59,9 @@ class InputM:
 
         # Add each match to the result list
         for match in matches:
-            sub_list = match.strip().replace("blank", "@").split(",")
+            sub_list = match.strip().replace("blank", blank).split(",")
             result_list.append(sub_list)
-            
+
         return result_list
 
 # Example usage
