@@ -60,7 +60,7 @@ class UniversalTuringMachine:
 
         if self.contentHead + 1 == len(self.contentTape):
             self.contentTape.append(blank)
-        elif self.contentHead - 1 == 0:
+        elif self.contentHead - 1 == blank:
             self.contentTape = [blank] + self.contentTape
 
         current_symbol = self.contentTape[self.contentHead]
