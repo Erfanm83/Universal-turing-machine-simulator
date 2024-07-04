@@ -1,7 +1,7 @@
 import re
 
-address = "test/one_aa_TM.txt"
-input_address = "test/one_aa_input_reject.txt"
+address = "test/inputMachine.txt"
+input_address = "test/inputstr.txt"
 blank = "#"
 
 

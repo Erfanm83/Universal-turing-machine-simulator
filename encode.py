@@ -12,8 +12,11 @@ actions_input = inputM.actions
 class Encode:
     def __init__(self):
         self.array_states = []
+        self.string_states = ""
+
         self.array_action = []
         self.describe = []
+        self.string_describe = ""
 
         self.__string_machine = ""
         self.__states = states_input
@@ -35,11 +38,15 @@ class Encode:
             temp = ""
             for j in range(x):
                 temp += "1"
+                self.string_states += "1"
+            self.string_states += "0"
+
             encode_array_states.append(temp)
             tuple_states.append({self.__states[i]: x})
             x += 1
-            # encode_array_states.append(0)
-        # encode_array_states.pop(len(encode_array_states) - 1)
+            encode_array_states.append(0)
+        encode_array_states.pop(len(encode_array_states) - 1)
+        self.string_states = self.string_states.removesuffix("0")
 
         # print("encode_array_states ", encode_array_states)
         self.dictionaries_state = tuple_states
@@ -143,12 +150,14 @@ class Encode:
                         self.__string_machine += "1"
                     array_decribe.append(0)
                     self.__string_machine += "0"
-
+            self.__string_machine = self.__string_machine.removesuffix("0")
             array_decribe.pop(len(array_decribe) - 1)
             array_decribe.append('$')
             self.__string_machine += "$"
 
         self.describe = array_decribe
+        self.__string_machine = self.__string_machine.removesuffix("$")
+        self.string_describe = self.__string_machine
         # print(self.__string_machine)
 
     def decode_state(self, arr):
@@ -217,7 +226,7 @@ class Encode:
 
 # Example
 # encode = Encode()
-
+# print(encode.string_describe)
 
 # print(encode.decode_final())
 # action = encode.array_action

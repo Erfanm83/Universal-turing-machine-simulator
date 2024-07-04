@@ -9,6 +9,7 @@ GREEN = "\033[32m"
 RED = "\033[31m"
 RESET = "\033[0m"
 blank = "#"
+spliter = "$"
 
 
 class UniversalTuringMachine:
@@ -16,8 +17,8 @@ class UniversalTuringMachine:
         encode = Encode()
         inputM = InputM()
         self.descriptionHead = None
-        self.stateTape = encode.array_states  # TM Input States for the simulated TM
-        self.descriptionTape = encode.describe  # Description of the simulated TM
+        self.stateTape = encode.string_states  # TM Input States for the simulated TM
+        self.descriptionTape = encode.string_describe  # Description of the simulated TM
         self.contentString = blank + inputM.input_string + blank  # Working tape for the simulated TM
         self.contentTape = list(self.contentString)  # Convert content string to list
         self.initialState = encode.decode_start()  # Initial state of the UTM
@@ -25,28 +26,31 @@ class UniversalTuringMachine:
         self.contentHead = 1  # Start at the beginning of the input string (after the initial blank)
         self.set_content_head()
         self.finalState = encode.decode_final()  # Final state of the UTM
-
-        # inputM = InputM()
-        # self.descriptionHead = None
-        # self.stateTape = inputM.states  # TM Input States for the simulated TM
-        # self.descriptionTape = inputM.actions  # Description of the simulated TM
-        # self.contentString = blank + inputM.input_string + blank  # Working tape for the simulated TM
-        # self.contentTape = list(self.contentString)  # Convert content string to list
-        # self.initialState = inputM.start_state  # Initial state of the UTM
-        # self.stateHead = self.stateTape.index(self.initialState[0])  # Head position in state tape
-        # self.contentHead = 1  # Start at the beginning of the input string (after the initial blank)
-        # self.set_content_head()
-        # self.finalState = inputM.final_state  # Final state of the UTM
-
         # Create ShowTape object with current instance as a parameter
         self.showTape = ShowTape(self)
+        # self.stateHead = 0
 
     def set_content_head(self):
-        # Set the initial description head based on the initial state and input symbol
-        for item in self.descriptionTape:
-            if item[0] == self.initialState[0] and item[1] == self.contentTape[1]:
-                self.descriptionHead = self.descriptionTape.index(item)
+        koja = 0
+        x = 0
+        for item in self.descriptionTape.split("$"):
+            tedad = 0
+            it = item.split("0")
+            if it[0] == self.initialState and self.get_ASCI_letter(it[1]) == self.contentTape[1]:
                 break
+            # if it[0] == "1":
+            #     break
+            x += 1
+        koja += x
+        for item in self.descriptionTape.split("$"):
+            if x != 0:
+                koja += len(item)
+                x -= 1
+            else:
+                break
+        self.descriptionHead = koja
+        return koja
+        # print("self.descriptionHead : " , self.descriptionHead)
 
     def print_message(self, message):
         # Print the acceptance or rejection message
@@ -67,12 +71,6 @@ class UniversalTuringMachine:
             print(border)
 
     def step(self):
-        # Perform one step of the Turing machine computation
-        if self.stateTape[self.stateHead] in self.finalState:
-            self.showTape.show_head()
-            self.print_message("ACCEPTED")
-            return False
-
         if self.contentHead + 1 == len(self.contentTape):
             self.contentTape.append(blank)
 
@@ -81,15 +79,22 @@ class UniversalTuringMachine:
             self.contentHead += 1
 
         current_symbol = self.contentTape[self.contentHead]
-        for action in self.descriptionTape:
-            if action[0] == self.stateTape[self.stateHead] and action[1] == current_symbol:
-                self.descriptionHead = self.descriptionTape.index(action)
-                self.contentTape[self.contentHead] = action[2]  # Write new symbol
-                self.stateHead = self.stateTape.index(action[4])  # Update state
-                self.contentHead += 1 if action[3] == 'R' else -1  # Move head
+        for action in self.descriptionTape.split("$"):
+            current_action = action.split("0")
+            if self.stateTape.index(current_action[0]) == self.stateHead and self.get_ASCI_letter(
+                    current_action[1]) == current_symbol:
+                self.descriptionHead = self.set_content_head()
+                self.contentTape[self.contentHead] = self.get_ASCI_letter(current_action[2])  # Write new symbol
+                self.stateHead = self.stateTape.index(current_action[4])  # Update state
+                self.contentHead += 1 if current_action[3] == '11' else -1  # Move head
                 time.sleep(0.5)  # Delay for 0.5 seconds
                 self.showTape.show_head()
                 return True
+
+        if self.stateHead == self.stateTape.index(self.finalState):
+            self.showTape.show_head()
+            self.print_message("ACCEPTED")
+            return False
         self.showTape.show_head()
         self.print_message("REJECTED")
         return False
@@ -99,6 +104,9 @@ class UniversalTuringMachine:
         self.showTape.show_head()
         while self.step():
             pass
+
+    def get_ASCI_letter(self, letter):
+        return chr(len(letter))
 
 
 class ShowTape:
@@ -116,7 +124,9 @@ class ShowTape:
         head_display = " " + "    " * self.utm.contentHead + " ↑\n"
         print(tape_display + head_display)
 
-        self.show_state_head()
+        self.draw_tape("State Tape", self.utm.stateTape, self.utm.stateHead)
+        self.draw_tape("Description Tape", self.utm.descriptionTape, self.utm.descriptionHead)
+        # self.show_state_head()
 
     def show_state_head(self):
         # Display the state tape with the head position
@@ -130,17 +140,17 @@ class ShowTape:
         head_display = " " * space_threshold * self.utm.stateHead + " " * (self.utm.stateHead) + " ↑\n"
         print(tape_display + head_display)
 
-        self.show_description_head()
+        # self.show_description_head()
 
     def show_description_head(self):
         # Display the description tape with the head position
         print("Description Tape : ")
         # Flatten the description tape with '%' symbol between each sublist
-        flattened_list = [item for sublist in self.utm.descriptionTape for item in sublist + ['%']]
+        flattened_list = [item for sublist in self.utm.descriptionTape for item in sublist + ['$']]
         flattened_list.pop()  # Remove the last '%'
-        description_str = ','.join(flattened_list).replace('%', ', % ,')
-        tapelength = max(len(string) for string in description_str.split(', % ,'))
-        tape_segments = description_str.split(', % ,')
+        description_str = ','.join(flattened_list).replace('$', ', $ ,')
+        tapelength = max(len(string) for string in description_str.split(', $ ,'))
+        tape_segments = description_str.split(', $ ,')
         tape_display = "╔" + ("═" * (tapelength + 1) + "╗") * len(tape_segments) + "\n"
         tape_display += "║" + " ║".join(segment.center(tapelength) for segment in tape_segments) + " ║\n"
         tape_display += "╚" + ("═" * (tapelength + 1) + "╝") * len(tape_segments) + "\n"
@@ -149,7 +159,29 @@ class ShowTape:
 
         print(tape_display + head_display)
 
+    def draw_tape(self, tapeName, tape_string, head):
+        print(tapeName + " : ")
+        # Construct the top border of the tape
+        top_border = "╔" + "═══╗" * len(tape_string)
+
+        # Construct the middle part with each character in its cell
+        middle_part = "║ " + " ║ ".join(tape_string) + " ║"
+
+        # Construct the bottom border of the tape
+        bottom_border = "╚" + "═══╝" * len(tape_string)
+
+        head_display = "    " * head + "  ↑\n"
+        # Print the tape
+        print(top_border)
+        print(middle_part)
+        print(bottom_border)
+        print(head_display)
+
 
 def clear():
     # Clear the console (works for Windows)
     os.system('cls')
+
+
+utm = UniversalTuringMachine()
+utm.run()
