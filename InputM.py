@@ -54,7 +54,7 @@ class InputM:
 
         # Add each match to the result list
         for match in matches:
-            sub_list = match.strip().replace("blank", "@").split(",")
+            sub_list = match.strip().replace("blank", "#").split(",")
             result_list.append(sub_list)
             
         return result_list
