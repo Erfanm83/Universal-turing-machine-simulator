@@ -2,6 +2,7 @@ import os
 import time
 
 from InputM import InputM
+from encode import Encode
 
 # ANSI color codes for terminal text formatting
 GREEN = "\033[32m"
@@ -12,17 +13,30 @@ blank = "#"
 
 class UniversalTuringMachine:
     def __init__(self):
+        encode = Encode()
         inputM = InputM()
         self.descriptionHead = None
-        self.stateTape = inputM.states  # TM Input States for the simulated TM
-        self.descriptionTape = inputM.actions  # Description of the simulated TM
+        self.stateTape = encode.array_states  # TM Input States for the simulated TM
+        self.descriptionTape = encode.describe  # Description of the simulated TM
         self.contentString = blank + inputM.input_string + blank  # Working tape for the simulated TM
         self.contentTape = list(self.contentString)  # Convert content string to list
-        self.initialState = inputM.start_state  # Initial state of the UTM
-        self.stateHead = self.stateTape.index(self.initialState[0])  # Head position in state tape
+        self.initialState = encode.decode_start()  # Initial state of the UTM
+        self.stateHead = self.stateTape.index(self.initialState)  # Head position in state tape
         self.contentHead = 1  # Start at the beginning of the input string (after the initial blank)
         self.set_content_head()
-        self.finalState = inputM.final_state  # Final state of the UTM
+        self.finalState = encode.decode_final()  # Final state of the UTM
+
+        # inputM = InputM()
+        # self.descriptionHead = None
+        # self.stateTape = inputM.states  # TM Input States for the simulated TM
+        # self.descriptionTape = inputM.actions  # Description of the simulated TM
+        # self.contentString = blank + inputM.input_string + blank  # Working tape for the simulated TM
+        # self.contentTape = list(self.contentString)  # Convert content string to list
+        # self.initialState = inputM.start_state  # Initial state of the UTM
+        # self.stateHead = self.stateTape.index(self.initialState[0])  # Head position in state tape
+        # self.contentHead = 1  # Start at the beginning of the input string (after the initial blank)
+        # self.set_content_head()
+        # self.finalState = inputM.final_state  # Final state of the UTM
 
         # Create ShowTape object with current instance as a parameter
         self.showTape = ShowTape(self)
@@ -115,7 +129,6 @@ class ShowTape:
         space_threshold = len(tape_display) // 3 // len(self.utm.stateTape)
         head_display = " " * space_threshold * self.utm.stateHead + " " * (self.utm.stateHead) + " ↑\n"
         print(tape_display + head_display)
-        print("self.utm.state_head : ", self.utm.stateHead)
 
         self.show_description_head()
 
