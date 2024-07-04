@@ -61,7 +61,7 @@ class InputM:
         for match in matches:
             sub_list = match.strip().replace("blank", blank).split(",")
             result_list.append(sub_list)
-            
+
         return result_list
 
 # Example usage

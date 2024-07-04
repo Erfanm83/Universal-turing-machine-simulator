@@ -12,11 +12,14 @@ actions_input = inputM.actions
 class Encode:
     def __init__(self):
         self.array_states = []
+
         self.string_states = ""
 
         self.array_action = []
         self.describe = []
         self.string_describe = ""
+        self.array_action = []
+        self.describe = []
 
         self.__string_machine = ""
         self.__states = states_input
@@ -150,12 +153,16 @@ class Encode:
                         self.__string_machine += "1"
                     array_decribe.append(0)
                     self.__string_machine += "0"
+
             self.__string_machine = self.__string_machine.removesuffix("0")
+
+
             array_decribe.pop(len(array_decribe) - 1)
             array_decribe.append('$')
             self.__string_machine += "$"
 
         self.describe = array_decribe
+
         self.__string_machine = self.__string_machine.removesuffix("$")
         self.string_describe = self.__string_machine
         # print(self.__string_machine)
@@ -213,6 +220,7 @@ class Encode:
 
         return 0
 
+
     def input_state(self, state, input):
         q_state = ""
         for dict in self.dictionaries_state:
@@ -254,3 +262,15 @@ class Encode:
 # print(encode.array_encode(q, inp))
 
 # print(encode.array_encode("q0", "b"))
+
+# q, inp = encode.input_state("111","111111111111111111111111111111111111111111111111111111111111111111111111")
+# print(q, inp)
+#
+# print(encode.array_encode(q, inp))
+#
+# q, inp = encode.input_state("111","1111111111111111111111111111111111111111111111111")
+# print(q, inp)
+#
+# print(encode.array_encode(q, inp))
+#
+# print(encode.array_encode("q0", "1"))
