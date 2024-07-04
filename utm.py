@@ -55,25 +55,28 @@ class UniversalTuringMachine:
     def step(self):
         # Perform one step of the Turing machine computation
         if self.stateTape[self.stateHead] in self.finalState:
+            self.showTape.show_head()
             self.print_message("ACCEPTED")
             return False
 
         if self.contentHead + 1 == len(self.contentTape):
             self.contentTape.append(blank)
-        elif self.contentHead - 1 == blank:
+
+        elif self.contentTape[self.contentHead] == blank:
             self.contentTape = [blank] + self.contentTape
+            self.contentHead += 1
 
         current_symbol = self.contentTape[self.contentHead]
         for action in self.descriptionTape:
             if action[0] == self.stateTape[self.stateHead] and action[1] == current_symbol:
                 self.descriptionHead = self.descriptionTape.index(action)
-                self.showTape.show_head()
                 self.contentTape[self.contentHead] = action[2]  # Write new symbol
                 self.stateHead = self.stateTape.index(action[4])  # Update state
                 self.contentHead += 1 if action[3] == 'R' else -1  # Move head
                 time.sleep(0.5)  # Delay for 0.5 seconds
-
+                self.showTape.show_head()
                 return True
+        self.showTape.show_head()
         self.print_message("REJECTED")
         return False
 
@@ -109,8 +112,10 @@ class ShowTape:
         tape_display = "╔" + ("═" * tapelength + "══╗") * len(self.utm.stateTape) + "\n"
         tape_display += "║ " + " ║ ".join(self.utm.stateTape[i] for i in range(0, len(self.utm.stateTape))) + " ║\n"
         tape_display += "╚" + ("═" * tapelength + "══╝") * len(self.utm.stateTape) + "\n"
-        head_display = " " + " " * (tapelength + 1) * tapelength * self.utm.stateHead + " ↑\n"
+        space_threshold = len(tape_display) // 3 // len(self.utm.stateTape)
+        head_display = " " * space_threshold * self.utm.stateHead + " " * (self.utm.stateHead) + " ↑\n"
         print(tape_display + head_display)
+        print("self.utm.state_head : ", self.utm.stateHead)
 
         self.show_description_head()
 
