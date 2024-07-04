@@ -1,0 +1,4 @@
+States: {q0, q1, q2, q3, q4, q5, q6, q7, q8, q9}
+Start State: {q0}
+Final States: {q9}
+Actions: {(q0,1,blank,R,q1),(q1,1,1,R,q1),(q1,0,0,R,q2),(q2,1,Y,R,q3),(q3,1,1,R,q3),(q3,Z,Z,R,q3),(q3,0,Z,L,q4),(q4,1,1,L,q4),(q4,Z,Z,L,q4),(q4,Y,Y,R,q2),(q2,Z,Z,L,q5),(q5,Y,1,L,q5),(q5,1,1,L,q5),(q5,0,0,L,q5),(q5,blank,blank,R,q0),(q0,blank,blank,R,q6),(q6,1,blank,R,q6),(q6,Z,1,R,q7),(q7,Z,1,R,q7),(q7,blank,blank,L,q8),(q8,1,1,L,q8),(q8,blank,blank,R,q9)}
