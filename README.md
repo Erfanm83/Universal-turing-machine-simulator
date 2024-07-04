@@ -59,3 +59,6 @@ write the following code on the Terminal or simply Run `utm.py` in your IDE
 python utm.py
 ```
 Our Project has character Tapes instead of 0 and 1 Tapes you can run it access it on the `charTape` Folder
+Do The Same for the file named `utm.py` file
+
+hint : you can test on so many files on out `test` Folder But PLease note that the input for each test is different to another
