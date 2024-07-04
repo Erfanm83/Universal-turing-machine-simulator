@@ -1,0 +1,4 @@
+States: {q1, q2, q0}
+Start State: {q0}
+Final States: {q2}
+Actions: {(q0,b,b,R,q0),(q0,a,a,R,q1),(q1,b,b,R,q0),(q1,a,a,R,q2)}
