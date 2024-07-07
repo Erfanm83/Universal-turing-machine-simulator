@@ -1,7 +1,7 @@
 import re
 
-address = "test/multiplier.txt"
-input_address = "test/multiplier-input.txt"
+address = "test/multiplier_MT.txt"
+input_address = "test/multiplier_MT_example.txt"
 blank = "#"
 
 

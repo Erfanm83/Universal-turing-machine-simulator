@@ -10,7 +10,7 @@ RED = "\033[31m"
 RESET = "\033[0m"
 blank = "#"
 spliter = "$"
-
+speed = 0
 
 class UniversalTuringMachine:
     def __init__(self):
@@ -87,7 +87,7 @@ class UniversalTuringMachine:
                 self.contentTape[self.contentHead] = self.get_ASCI_letter(current_action[2])  # Write new symbol
                 self.stateHead = self.stateTape.index(current_action[4])  # Update state
                 self.contentHead += 1 if current_action[3] == '11' else -1  # Move head
-                time.sleep(0.5)  # Delay for 0.5 seconds
+                time.sleep(speed)  # Delay for 0.5 seconds
                 self.showTape.show_head()
                 return True
 
